@@ -22,7 +22,7 @@ app.add_middleware(
 
 
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["auth"])
-app.include_router(oauth.router, prefix="/aoi/v1/oauth", tags=["oauth"])
+# app.include_router(oauth.router, prefix="/aoi/v1/oauth", tags=["oauth"])
 
 @app.get("/health", tags=["system"])
 def health_check():
