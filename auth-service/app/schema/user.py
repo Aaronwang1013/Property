@@ -1,32 +1,25 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional, List, Dict
-from datetime import datetime, date
 
 
-class GetUser(BaseModel):
-    email: EmailStr
-    username: Optional[str]
-    role: int
-
-    class Config:
-        orm_mode = True
-        use_enum_values = True
-
-
-class LoginUser(BaseModel):
+class UserCreate(BaseModel):
     email: EmailStr
     password: str
 
-    class Config:
-        orm_mode = True
-        use_enum_values = True
 
-
-class PostUser(BaseModel):
+class UserLogin(BaseModel):
     email: EmailStr
-    username: Optional[str]
     password: str
 
+class UserResponse(BaseModel):
+    id: int
+    email: EmailStr
+
     class Config:
         orm_mode = True
-        use_enum_values = True
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+    

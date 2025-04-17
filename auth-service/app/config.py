@@ -1,5 +1,4 @@
 from pydantic_settings import BaseSettings
-from pathlib import Path
 
 
 class Settings(BaseSettings):
@@ -9,22 +8,27 @@ class Settings(BaseSettings):
     db_pwd: str
     db_usr: str
     port: str
+    #origin
+    BACKEND_CORS_ORIGINS: list[str]
 
     # JWT token
-    secret_key: str
+    JWT_KEY: str
     refresh_secret_key: str
-    algorithm: str
-    timeout: int
+    JWT_ALGO: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
     REFRESH_TOKEN_EXPIRE_MINUTES: int
+
+    #Oauth2.0
+    GOOGLE_CLIENT_ID: str
+    GOOGLE_CLIENT_SECRET: str
+    GOOGLE_REDIRECT_URI: str = "http://localhost:8000/api/v1/oauth/google/callback"
 
     # internal env
     adminapikey: str
     SERVER: str
 
     class Config:
-        env_file = Path(Path(__file__).resolve().parent) / ".env"
-        print(f"environment created - {Path(Path(__file__).resolve().name)}")
+        env_file  = ".env"
 
 
 settings = Settings()
