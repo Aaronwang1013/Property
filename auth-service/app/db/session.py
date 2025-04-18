@@ -8,11 +8,11 @@ from app.config import settings
 def _connection_url() -> str:
     return URL.create(
         drivername="postgresql+psycopg2",
-        username=settings.db_usr,
-        password=settings.db_pwd,
-        host=settings.db_host,
-        port=settings.db_port,
-        database=settings.db_name,
+        username=settings.POSTGRES_USER,
+        password=settings.POSTGRES_PASSWORD,
+        host=settings.POSTGRES_HOST,
+        port=settings.POSTGRES_PORT,
+        database=settings.POSTGRES_DB,
     )
 
 

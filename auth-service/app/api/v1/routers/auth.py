@@ -6,7 +6,6 @@ from app.schema import user as user_schema
 from app.models import user as user_model
 from app.db.session import get_db
 from app.core.security import create_access_token
-from app.config import settings
 
 router = APIRouter()
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
