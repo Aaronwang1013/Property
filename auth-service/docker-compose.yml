@@ -1,6 +1,6 @@
 services:
   db:
-    image: amd64/postgres:latest
+    image: postgres:16-alpine
     restart: always
     container_name: auth-db
     environment:
