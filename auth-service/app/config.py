@@ -7,7 +7,6 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
     POSTGRES_PASSWORD: str
     POSTGRES_USER: str
-    POSTGRES_PORT: str
     #origin
     BACKEND_CORS_ORIGINS: list[str]
 
@@ -19,9 +18,9 @@ class Settings(BaseSettings):
     # REFRESH_TOKEN_EXPIRE_MINUTES: int
 
     #Oauth2.0
-    GOOGLE_CLIENT_ID: str
-    GOOGLE_CLIENT_SECRET: str
-    GOOGLE_REDIRECT_URI: str = "http://localhost:8000/api/v1/oauth/google/callback"
+    # GOOGLE_CLIENT_ID: str
+    # GOOGLE_CLIENT_SECRET: str
+    # GOOGLE_REDIRECT_URI: str = "http://localhost:8000/api/v1/oauth/google/callback"
 
 
     class Config:
