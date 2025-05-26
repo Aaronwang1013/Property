@@ -5,6 +5,7 @@ import random
 
 router = APIRouter()
 
+
 @router.get("/compare")
 def compare_performance():
     today = date.today()
