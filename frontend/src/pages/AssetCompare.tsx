@@ -1,30 +1,28 @@
 import { useEffect, useState} from "react";
-import axois from "axois";
+import axios from "axios";
 import {
-    LineChart, Line, XAais, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
 
-type DatePoint = {
+type DataPoint = {
     timestamp: string;
     value: number;
 }
 
 
-
 export default function AssetCompare() {
-    const [assetData, setAssetData] = useState<DataPoint[]>([]);
-    const [benchmarkData, setBenchmarkData] = useState<DataPoint[]>([]);
-    const [compare, setCompare] = useState<any>(null);
+  const [assetData, setAssetData] = useState<DataPoint[]>([]);
+  const [benchmarkData, setBenchmarkData] = useState<DataPoint[]>([]);
+  const [compare, setCompare] = useState<any>(null);
 
-    useEffect(() => {
-        axois.get("/api/v1/assets/history").then(res => setAssetData(res.data.records));
-        axois.get("/api/v1/benchmark/market").then(res => setBenchmarkData(res.data.data));
-        axois.get("/api/v1/assets/compare").then(res => setCompare(res.data));
-    }, []);
-}
+  useEffect(() => {
+    axios.get("/api/v1/assets/history").then(res => setAssetData(res.data.records));
+    axios.get("/api/v1/benchmark/market").then(res => setBenchmarkData(res.data.data));
+    axios.get("/api/v1/assets/compare").then(res => setCompare(res.data));
+  }, []);
 
-
-const mergedData = assetData.map((d, i) => ({
+  // 將兩筆資料合併對齊（根據 timestamp）
+  const mergedData = assetData.map((d, i) => ({
     timestamp: d.timestamp.slice(0, 10), // 只顯示日期
     資產: d.value,
     大盤: benchmarkData[i]?.value || null,
