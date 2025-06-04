@@ -11,23 +11,41 @@ services:
       - "${POSTGRES_PORT}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
 
     
   auth-service:
-    build: .
+    build: ./auth-service
     container_name: auth-service
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    command: poetry run uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     ports:
       - "8000:8000"
     env_file:
-      - .env.docker
+      - ./auth-service/.env.docker
     depends_on:
       - db
+    volumes:
+      - ./auth-service:/app
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8000/api/v1/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
+    networks:
+      - backend
     
+  redis:
+    image: redis:7-alpine
+    container_name: auth-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - backend
+      
 volumes:
   postgres_data:
+
+networks:
+  backend:
+  

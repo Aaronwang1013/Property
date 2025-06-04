@@ -10,6 +10,13 @@ class Settings(BaseSettings):
     #origin
     BACKEND_CORS_ORIGINS: list[str]
 
+    #redis
+    REDIS_HOST: str
+    REDIS_PORT: int
+    REDIS_DB: int
+    
+
+
     # JWT token
     JWT_KEY: str
     # refresh_secret_key: str

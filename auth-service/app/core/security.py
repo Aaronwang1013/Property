@@ -8,6 +8,8 @@ from sqlalchemy.orm import Session
 from app.config import settings
 from app.db.session import get_db
 from app.models.user import User
+from app.redis.client import r
+import uuid
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -25,6 +27,12 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
     return encoded_jwt
 
 
+def create_refresh_token(user_id: str) -> str:
+    token = str(uuid.uuid4())
+    r.setex(f"refresh_token:{token}", timedelta(days=7), value=user_id)
+    return token
+
+
 def verify_token(token: str) -> dict:
     try:
         payload = jwt.decode(token, settings.JWT_KEY, algorithms=[settings.JWT_ALGO])
@@ -35,6 +43,15 @@ def verify_token(token: str) -> dict:
             detail="Token is invalid or expired",
             headers={"WWW-Authenticate": "Bearer"},
         )
+
+
+def verify_refresh_token(token: str) -> str | None:
+    user_id = r.get(f"refresh_token: {token}")
+    if user_id:
+        r.delete(f"refresh_token: {token}")
+        return user_id
+
+    return None
 
 
 def get_current_user(
